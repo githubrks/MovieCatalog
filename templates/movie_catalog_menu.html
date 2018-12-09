@@ -1,0 +1,29 @@
+{% extends "template.html" %}
+{% block content %}
+{% include "alert.html" %}
+{% include "movie_category_panel.html" %}
+<div class="col-md-9">
+	<div class="row">
+		<div class="col-md-12">
+			{% if quantity != 1 %}
+			<h2>{{ category.name }} Items ({{ quantity }} items)
+			{% else %}
+			<h2>{{ category.name }} Items ({{ quantity }} item)
+			{% endif %}
+			{% if session.user_id %}
+			<div class="pull-right">
+				<a href = "{{ url_for('newMovie') }}">
+					<button class="btn btn-success primary">
+						<span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 
+							Add Item
+					</button>
+				</a>
+			</div>
+			{% endif %}
+			</h2>
+		</div>
+	</div>
+	{% include "movie_list.html" %}
+</div>
+
+{% endblock %}

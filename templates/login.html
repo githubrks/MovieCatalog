@@ -1,0 +1,48 @@
+{% extends "template.html" %}
+{% block content %}
+<div class="col-md-6 col-md-offset-3" style="align-items: center;">
+    <div id="result"></div>
+    <div class="panel panel-primary">
+    <div class="panel-heading"><b>Google Sign-In</b></div>
+    <div class="panel-body">
+    <div id="signInButton">
+      <span class="g-signin"
+        data-scope="profile openid email"
+        data-clientid="576568916824-bpf9g1p0av8qqju8i7ria03gqhqv9one.apps.googleusercontent.com"
+        data-redirecturi="postmessage"
+        data-accesstype="offline"
+        data-cookiepolicy="single_host_origin"
+        data-callback="signInCallback"
+        data-approvalprompt="force">
+      </span>
+    </div>
+    </div>
+    </div>
+
+    <script>
+        function signInCallback(authResult) {
+        if (authResult['code']) {
+            $('#signinButton').attr('style', 'display: none');
+            $.ajax({
+                type: 'POST',
+                url: '/gconnect?state={{STATE}}',
+                processData: false,
+                data: authResult['code'],
+                contentType: 'application/octet-stream; charset=utf-8',
+                success: function(result) {
+                    if (result) {
+                        $('#result').html('Login Done!</br>'+ result + '</br> Now Redirecting...')
+                        setTimeout(function() {
+                        window.location.href = "/categories/";
+                        }, 2000);
+                        
+                    } else if (authResult['error']) {
+                        console.log('There was an error while login: ' + authResult['error']);
+                    } else {
+                        $('#result').html('Failed to make a server-side call.');
+                    }
+                }    
+        }); } }
+    </script>
+</div>
+{% endblock %}

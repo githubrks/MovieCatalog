@@ -1,0 +1,16 @@
+{% extends "template.html" %}
+{% block content %}
+<div class="col-md-9" style="background-color: black;">
+<h2> Are you sure you want to delete {{item.name}}? </h2>
+<form  method = 'post'>
+	<button type="submit" class="btn btn-danger delete" id="submit" type="submit">
+	<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>Delete</button>
+	<button class="btn btn-default delete">
+		<span class="glyphicon glyphicon-remove" aria-hidden="true"></span> 
+		<a href = "{{ url_for('showMovieCatalog') }}">
+			Cancel
+		</a>
+	</button>
+</form>
+</div>
+{% endblock %}

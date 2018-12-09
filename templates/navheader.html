@@ -1,0 +1,37 @@
+<!-- Bootstrap Navigation Bar -->
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+      <a class="navbar-brand" href="{{ url_for('showMovieCatalog') }}"><span style="color:rgb(99, 243, 231)">Movie Catalog</span></a>
+    </div>
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav navbar-right">
+        {%if 'username' not in session %}
+          <li><a href="{{url_for('login')}}"><button class="btn btn-danger navbar-btn">Login</button></a></li>
+        {% else %}
+          {% if session.user_id %}
+          <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
+                <img src="{{ session['picture']}}" class="navbar-profile-image image-responsive pull-left" alt="your image">
+              <span class="caret"></span></a>
+              <ul class="dropdown-menu">
+                <li><a href="{{ url_for('newMovieCategory') }}">Add Movie Category</a></li>
+                <li><a href="{{ url_for('newMovie') }}">Add Movie</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{ url_for('showMovieCatalog') }}">Home</a></li>
+                <li role="separator" class="divider"></li>
+                <li><a href="{{url_for('disconnect')}}">Logout: {{ session['username']}} </a></li>
+              </ul>
+            </li>
+          {% endif %}
+        {% endif %} 
+      </ul>
+    </div>
+  </div>
+</nav>
